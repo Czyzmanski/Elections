@@ -27,25 +27,25 @@ public class District implements Iterable<Candidate> {
     }
 
     public int numberOfVoters() {
-        return this.voters.size();
+        return voters.size();
     }
 
     public int numberOfMandates() {
-        return this.voters.size() / VOTERS_TO_MANDATES_DIVISION_FACTOR;
+        return voters.size() / VOTERS_TO_MANDATES_DIVISION_FACTOR;
     }
 
     public void addVote(Party party) {
-        this.partyToVotesCount.put(party, this.partyToVotesCount.get(party) + 1);
+        partyToVotesCount.put(party, partyToVotesCount.get(party) + 1);
     }
 
     public void conductElections(MandatesAllocationMethod allocationMethod) {
-        this.voters.forEach(Voter::vote);
-        Map<Party, Integer> partyToVotesCountCopy = new HashMap<>(this.partyToVotesCount);
-        this.partyToMandatesCount = allocationMethod.allocateMandates(partyToVotesCountCopy);
+        voters.forEach(Voter::vote);
+        Map<Party, Integer> partyToVotesCountCopy = new HashMap<>(partyToVotesCount);
+        partyToMandatesCount = allocationMethod.allocateMandates(partyToVotesCountCopy);
     }
 
     public Stream<Candidate> stream() {
-        return this.candidates.stream();
+        return candidates.stream();
     }
 
     private class DistrictIterator implements Iterator<Candidate> {
@@ -58,7 +58,7 @@ public class District implements Iterable<Candidate> {
 
         @Override
         public boolean hasNext() {
-            return this.processed < District.this.numberOfVoters();
+            return processed < District.this.numberOfVoters();
         }
 
         @Override

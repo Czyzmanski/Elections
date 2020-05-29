@@ -31,8 +31,12 @@ public class Candidate {
     }
 
     public void voteFor() {
-        this.numberOfVotes++;
-        this.district.addVote(this.party);
+        numberOfVotes++;
+        district.addVote(party);
+    }
+
+    public int getQuality(int numberOfQuality) {
+        return qualities[numberOfQuality];
     }
 
 }
