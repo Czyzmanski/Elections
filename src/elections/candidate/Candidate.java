@@ -12,18 +12,18 @@ public class Candidate {
     private int[] qualities;
     private District district;
     private Party party;
-    private int numberOfTicket;
-    private int numberOfVotes;
+    private int ticketNumber;
+    private int votesCount;
 
     public Candidate(String firstName, String lastName, int[] qualities,
-                     District district, Party party, int numberOfTicket) {
+                     District district, Party party, int ticketNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.qualities = Arrays.copyOf(qualities, qualities.length);
         this.district = district;
         this.party = party;
-        this.numberOfTicket = numberOfTicket;
-        this.numberOfVotes = 0;
+        this.ticketNumber = ticketNumber;
+        this.votesCount = 0;
     }
 
     public boolean belongs(Party party) {
@@ -31,12 +31,12 @@ public class Candidate {
     }
 
     public void voteFor() {
-        numberOfVotes++;
+        votesCount++;
         district.addVote(party);
     }
 
-    public int getQuality(int numberOfQuality) {
-        return qualities[numberOfQuality];
+    public int quality(int qualityNumber) {
+        return qualities[qualityNumber];
     }
 
 }

@@ -17,6 +17,7 @@ public class CandidateVoter extends Voter {
     @Override
     public void vote() {
         candidate.voteFor();
+        chosenCandidate = candidate;
     }
 
     @Override
