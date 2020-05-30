@@ -22,7 +22,7 @@ public class Action {
     }
 
     public int getCost(District district) {
-        return absValuesSum * district.numberOfVoters();
+        return absValuesSum * district.votersNumber();
     }
 
     public Action reverseAction() {

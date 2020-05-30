@@ -21,7 +21,7 @@ public abstract class SingleQualityVoter extends Voter {
     }
 
     protected Stream<Candidate> matchingCandidates() {
-        return district.stream();
+        return district.candidates();
     }
 
     protected Stream<Integer> matchingQualities() {

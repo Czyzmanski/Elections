@@ -8,7 +8,7 @@ import elections.voter.Voter;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class District implements Iterable<Candidate> {
+public class District {
 
     private static final int VOTERS_TO_MANDATES_DIVISION_FACTOR = 10;
 
@@ -26,11 +26,11 @@ public class District implements Iterable<Candidate> {
         this.partyToMandatesCount = null;
     }
 
-    public int numberOfVoters() {
+    public int votersNumber() {
         return voters.size();
     }
 
-    public int numberOfMandates() {
+    public int mandatesNumber() {
         return voters.size() / VOTERS_TO_MANDATES_DIVISION_FACTOR;
     }
 
@@ -44,37 +44,12 @@ public class District implements Iterable<Candidate> {
         partyToMandatesCount = allocationMethod.allocateMandates(partyToVotesCountCopy);
     }
 
-    public Stream<Candidate> stream() {
+    public Stream<Voter> voters() {
+        return voters.stream();
+    }
+
+    public Stream<Candidate> candidates() {
         return candidates.stream();
-    }
-
-    private class DistrictIterator implements Iterator<Candidate> {
-
-        private int processed;
-
-        public DistrictIterator() {
-            this.processed = 0;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return processed < District.this.numberOfVoters();
-        }
-
-        @Override
-        public Candidate next() {
-            if (!this.hasNext()) {
-                throw new NoSuchElementException();
-            } else {
-                return District.this.candidates.get(processed++);
-            }
-        }
-
-    }
-
-    @Override
-    public Iterator<Candidate> iterator() {
-        return new DistrictIterator();
     }
 
 }

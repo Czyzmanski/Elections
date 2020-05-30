@@ -35,7 +35,7 @@ public class UniversalVoter extends Voter {
 
     @Override
     protected Stream<Candidate> matchingCandidates() {
-        return district.stream();
+        return district.candidates();
     }
 
     @Override
