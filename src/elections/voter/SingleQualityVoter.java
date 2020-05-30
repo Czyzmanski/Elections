@@ -2,35 +2,26 @@ package elections.voter;
 
 import elections.candidate.Candidate;
 import elections.district.District;
-import elections.party.Action;
 
-import java.util.Comparator;
 import java.util.Random;
-import java.util.function.Predicate;
+import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 
-public class SingleQualityVoter extends Voter {
+public abstract class SingleQualityVoter extends Voter {
 
-    /* Number of quality to find extremum of. */
-    protected int qualityNumber;
-    protected Predicate<? super Candidate> candidatePredicate;
-    protected Comparator<? super Integer> qualityComparator;
     protected Random random;
+    protected int qualityNumber;
+    protected BinaryOperator<Integer> qualityAccumulator;
 
     public SingleQualityVoter(String firstName, String lastName,
-                              District district, int qualityNumber,
-                              Predicate<? super Candidate> candidatePredicate,
-                              Comparator<? super Integer> qualityComparator) {
+                              District district, int qualityNumber) {
         super(firstName, lastName, district);
-        this.qualityNumber = qualityNumber - 1;
-        this.candidatePredicate = candidatePredicate;
-        this.qualityComparator = qualityComparator;
         this.random = new Random();
+        this.qualityNumber = qualityNumber - 1;
     }
 
     protected Stream<Candidate> matchingCandidates() {
-        return district.stream()
-                       .filter(candidatePredicate);
+        return district.stream();
     }
 
     protected Stream<Integer> matchingQualities() {
@@ -39,19 +30,19 @@ public class SingleQualityVoter extends Voter {
 
     @Override
     public void vote() {
-        int extremeQlty = matchingQualities().min(qualityComparator)
-                                             .orElseThrow();
-        int extremeQltyCount = (int) matchingQualities().filter(qlty -> qlty == extremeQlty)
-                                                        .count();
-        chosenCandidate = matchingCandidates().filter(c -> c.quality(qualityNumber) == extremeQlty)
-                                              .skip(random.nextInt(extremeQltyCount))
-                                              .findFirst()
-                                              .orElseThrow();
-        chosenCandidate.voteFor();
-    }
-
-    @Override
-    public void applyAction(Action action) {
+        if (qualityAccumulator == null) {
+            throw new IllegalStateException("Value of qualityAccumulator field is not set.");
+        } else {
+            int desiredQlty = matchingQualities().reduce(qualityAccumulator)
+                                                 .orElseThrow();
+            int desiredQltyCount = Math.toIntExact(matchingQualities().filter(q -> q == desiredQlty)
+                                                                      .count());
+            chosenCandidate = matchingCandidates().filter(c -> c.quality(qualityNumber) == desiredQlty)
+                                                  .skip(random.nextInt(desiredQltyCount))
+                                                  .findFirst()
+                                                  .orElseThrow();
+            chosenCandidate.voteFor();
+        }
     }
 
 }
