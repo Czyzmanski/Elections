@@ -4,6 +4,8 @@ import elections.candidate.Candidate;
 import elections.district.District;
 import elections.party.Action;
 
+import java.util.stream.Stream;
+
 public abstract class Voter {
 
     protected String firstName;
@@ -18,8 +20,12 @@ public abstract class Voter {
         this.chosenCandidate = null;
     }
 
+    protected abstract Stream<Candidate> matchingCandidates();
+
     public abstract void vote();
 
-    public abstract void applyAction(Action action);
+    public abstract void influence(Action action);
+
+    public abstract double assess(Candidate candidate);
 
 }

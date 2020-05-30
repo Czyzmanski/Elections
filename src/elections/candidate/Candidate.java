@@ -39,4 +39,8 @@ public class Candidate {
         return qualities[qualityNumber];
     }
 
+    public int[] qualities() {
+        return Arrays.copyOf(qualities, qualities.length);
+    }
+
 }

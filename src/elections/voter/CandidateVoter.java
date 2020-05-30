@@ -4,6 +4,8 @@ import elections.candidate.Candidate;
 import elections.district.District;
 import elections.party.Action;
 
+import java.util.stream.Stream;
+
 public class CandidateVoter extends Voter {
 
     protected final Candidate candidate;
@@ -16,12 +18,23 @@ public class CandidateVoter extends Voter {
 
     @Override
     public void vote() {
-        candidate.voteFor();
-        chosenCandidate = candidate;
+        chosenCandidate = matchingCandidates().findFirst()
+                                              .orElseThrow();
+        chosenCandidate.voteFor();
     }
 
     @Override
-    public void applyAction(Action action) {
+    protected Stream<Candidate> matchingCandidates() {
+        return Stream.of(candidate);
+    }
+
+    @Override
+    public double assess(Candidate candidate) {
+        return 0;
+    }
+
+    @Override
+    public void influence(Action action) {
     }
 
 }

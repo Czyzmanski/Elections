@@ -1,5 +1,6 @@
 package elections.voter;
 
+import elections.candidate.Candidate;
 import elections.district.District;
 import elections.party.Action;
 
@@ -15,7 +16,12 @@ public class MaxSingleQualityVoter extends SingleQualityVoter {
     }
 
     @Override
-    public void applyAction(Action action) {
+    public double assess(Candidate candidate) {
+        return 0;
+    }
+
+    @Override
+    public void influence(Action action) {
     }
 
 }

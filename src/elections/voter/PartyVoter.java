@@ -1,10 +1,12 @@
 package elections.voter;
 
+import elections.candidate.Candidate;
 import elections.district.District;
 import elections.party.Action;
 import elections.party.Party;
 
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class PartyVoter extends Voter {
 
@@ -18,17 +20,26 @@ public class PartyVoter extends Voter {
     }
 
     @Override
-    public void vote() {
-        int toSkip = random.nextInt(district.numberOfMandates());
-        chosenCandidate = district.stream()
-                                  .filter(candidate -> candidate.belongs(party))
-                                  .skip(toSkip)
-                                  .findFirst()
-                                  .orElseThrow();
+    public double assess(Candidate candidate) {
+        return 0;
     }
 
     @Override
-    public void applyAction(Action action) {
+    protected Stream<Candidate> matchingCandidates() {
+        return district.stream()
+                       .filter(candidate -> candidate.belongs(party));
+    }
+
+    @Override
+    public void vote() {
+        int toSkip = random.nextInt(district.numberOfMandates());
+        chosenCandidate = matchingCandidates().skip(toSkip)
+                                              .findFirst()
+                                              .orElseThrow();
+    }
+
+    @Override
+    public void influence(Action action) {
     }
 
 }
