@@ -25,17 +25,17 @@ public class Action {
         return absValuesSum * district.votersNumber();
     }
 
-    public Action reverseAction() {
+    public int getChange(int i) {
+        return changes[i];
+    }
+
+    public Action getReverseAction() {
         int[] reverseChanges = new int[changes.length];
         for (int i = 0; i < reverseChanges.length; i++) {
             reverseChanges[i] = -changes[i];
         }
 
         return new Action(reverseChanges, absValuesSum);
-    }
-
-    public int getChange(int i) {
-        return changes[i];
     }
 
 }

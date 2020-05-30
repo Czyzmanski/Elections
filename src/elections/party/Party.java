@@ -2,27 +2,24 @@ package elections.party;
 
 import elections.district.District;
 
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class Party {
 
     protected String name;
     protected int budget;
-    protected Action[] actions;
-    protected int numberOfMandates;
+    protected int mandatesNumber;
 
-    public Party(String name, int budget, Action[] actions, int numberOfMandates) {
+    public Party(String name, int budget, int mandatesNumber) {
         this.name = name;
         this.budget = budget;
-        this.actions = Arrays.copyOf(actions, actions.length);
-        this.numberOfMandates = numberOfMandates;
+        this.mandatesNumber = mandatesNumber;
     }
 
     public void addMandates(int mandates) {
-        this.numberOfMandates += mandates;
+        this.mandatesNumber += mandates;
     }
 
-    public abstract void conductCampaign(List<District> districts);
+    public abstract void conductCampaign(List<Action> actions, List<District> districts);
 
 }

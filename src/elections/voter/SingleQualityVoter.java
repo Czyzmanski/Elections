@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 
+import static java.lang.Math.toIntExact;
+
 public abstract class SingleQualityVoter extends Voter {
 
     protected Random random;
@@ -35,8 +37,8 @@ public abstract class SingleQualityVoter extends Voter {
         } else {
             int desiredQlty = matchingQualities().reduce(qualityAccumulator)
                                                  .orElseThrow();
-            int desiredQltyCount = Math.toIntExact(matchingQualities().filter(q -> q == desiredQlty)
-                                                                      .count());
+            int desiredQltyCount = toIntExact(matchingQualities().filter(q -> q == desiredQlty)
+                                                                 .count());
             chosenCandidate = matchingCandidates().filter(c -> c.quality(qualityNumber) == desiredQlty)
                                                   .skip(random.nextInt(desiredQltyCount))
                                                   .findFirst()

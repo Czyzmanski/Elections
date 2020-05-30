@@ -2,6 +2,7 @@ package elections.district;
 
 import elections.candidate.Candidate;
 import elections.mandates.MandatesAllocationMethod;
+import elections.party.Action;
 import elections.party.Party;
 import elections.voter.Voter;
 
@@ -44,8 +45,8 @@ public class District {
         partyToMandatesCount = allocationMethod.allocateMandates(partyToVotesCountCopy);
     }
 
-    public Stream<Voter> voters() {
-        return voters.stream();
+    public void influenceVoters(Action action) {
+        voters.forEach(voter -> voter.influence(action));
     }
 
     public Stream<Candidate> candidates() {
