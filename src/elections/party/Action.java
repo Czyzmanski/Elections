@@ -29,13 +29,4 @@ public class Action {
         return changes[i];
     }
 
-    public Action getReverseAction() {
-        int[] reverseChanges = new int[changes.length];
-        for (int i = 0; i < reverseChanges.length; i++) {
-            reverseChanges[i] = -changes[i];
-        }
-
-        return new Action(reverseChanges, absValuesSum);
-    }
-
 }

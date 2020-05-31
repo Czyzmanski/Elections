@@ -14,10 +14,12 @@ public class UniversalVoter extends Voter {
     private static final int MAX_WEIGHT_VALUE = 100;
 
     protected int[] weights;
+    protected int[] prevWeights;
 
     public UniversalVoter(String firstName, String lastName, District district, int[] weights) {
         super(firstName, lastName, district);
         this.weights = Arrays.copyOf(weights, weights.length);
+        this.prevWeights = Arrays.copyOf(weights, weights.length);
     }
 
     @Override
@@ -47,6 +49,8 @@ public class UniversalVoter extends Voter {
 
     @Override
     public void influence(Action action) {
+        System.arraycopy(weights, 0, prevWeights, 0, weights.length);
+
         for (int i = 0; i < weights.length; i++) {
             int change = action.getChange(i);
             if (change < 0) {
@@ -59,7 +63,7 @@ public class UniversalVoter extends Voter {
 
     @Override
     public void revertLastInfluence() {
-        //TODO
+        System.arraycopy(prevWeights, 0, weights, 0, weights.length);
     }
 
 }
