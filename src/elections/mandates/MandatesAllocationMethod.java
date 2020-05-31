@@ -6,6 +6,7 @@ import java.util.Map;
 
 public abstract class MandatesAllocationMethod {
 
-    public abstract Map<Party, Integer> allocateMandates(Map<Party, Integer> partyToVotesCount);
+    public abstract Map<Party, Integer> allocateMandates(int mandatesNumber,
+                                                         Map<Party, Integer> partyToVotesCount);
 
 }

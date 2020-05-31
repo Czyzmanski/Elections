@@ -42,7 +42,7 @@ public class District {
     public void conductElections(MandatesAllocationMethod allocationMethod) {
         voters.forEach(Voter::vote);
         Map<Party, Integer> partyToVotesCountCopy = new HashMap<>(partyToVotesCount);
-        partyToMandatesCount = allocationMethod.allocateMandates(partyToVotesCountCopy);
+        partyToMandatesCount = allocationMethod.allocateMandates(0, partyToVotesCountCopy);
     }
 
     public void influenceVoters(Action action) {
