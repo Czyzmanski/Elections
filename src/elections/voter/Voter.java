@@ -26,6 +26,8 @@ public abstract class Voter {
 
     public abstract void influence(Action action);
 
+    public abstract void revertLastInfluence();
+
     public abstract double assess(Candidate candidate);
 
 }

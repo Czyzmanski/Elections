@@ -11,8 +11,8 @@ public class MinSingleQualityVoter extends SingleQualityVoter {
 
     public MinSingleQualityVoter(String firstName, String lastName,
                                  District district, int qualityNumber) {
-        super(firstName, lastName, district, qualityNumber);
-        this.qualityAccumulator = BinaryOperator.minBy(Comparator.naturalOrder());
+        super(firstName, lastName, district, qualityNumber,
+              BinaryOperator.minBy(Comparator.naturalOrder()));
     }
 
     @Override
@@ -22,6 +22,10 @@ public class MinSingleQualityVoter extends SingleQualityVoter {
 
     @Override
     public void influence(Action action) {
+    }
+
+    @Override
+    public void revertLastInfluence() {
     }
 
 }

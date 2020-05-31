@@ -57,4 +57,9 @@ public class UniversalVoter extends Voter {
         }
     }
 
+    @Override
+    public void revertLastInfluence() {
+        //TODO
+    }
+
 }

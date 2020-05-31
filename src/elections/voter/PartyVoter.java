@@ -42,4 +42,8 @@ public class PartyVoter extends Voter {
     public void influence(Action action) {
     }
 
+    @Override
+    public void revertLastInfluence() {
+    }
+
 }

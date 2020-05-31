@@ -19,7 +19,7 @@ public class MinSingleQualityPartyVoter extends MinSingleQualityVoter {
     @Override
     protected Stream<Candidate> matchingCandidates() {
         return super.matchingCandidates()
-                    .filter(c -> c.belongs(party));
+                    .filter(candidate -> candidate.belongs(party));
     }
 
 }

@@ -11,8 +11,8 @@ public class MaxSingleQualityVoter extends SingleQualityVoter {
 
     public MaxSingleQualityVoter(String firstName, String lastName,
                                  District district, int qualityNumber) {
-        super(firstName, lastName, district, qualityNumber);
-        this.qualityAccumulator = BinaryOperator.maxBy(Comparator.naturalOrder());
+        super(firstName, lastName, district, qualityNumber,
+              BinaryOperator.maxBy(Comparator.naturalOrder()));
     }
 
     @Override
@@ -22,6 +22,10 @@ public class MaxSingleQualityVoter extends SingleQualityVoter {
 
     @Override
     public void influence(Action action) {
+    }
+
+    @Override
+    public void revertLastInfluence() {
     }
 
 }

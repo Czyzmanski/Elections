@@ -37,4 +37,8 @@ public class CandidateVoter extends Voter {
     public void influence(Action action) {
     }
 
+    @Override
+    public void revertLastInfluence() {
+    }
+
 }

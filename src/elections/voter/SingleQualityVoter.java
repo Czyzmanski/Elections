@@ -15,11 +15,12 @@ public abstract class SingleQualityVoter extends Voter {
     protected int qualityNumber;
     protected BinaryOperator<Integer> qualityAccumulator;
 
-    public SingleQualityVoter(String firstName, String lastName,
-                              District district, int qualityNumber) {
+    public SingleQualityVoter(String firstName, String lastName, District district,
+                              int qualityNumber, BinaryOperator<Integer> qualityAccumulator) {
         super(firstName, lastName, district);
         this.random = new Random();
         this.qualityNumber = qualityNumber - 1;
+        this.qualityAccumulator = qualityAccumulator;
     }
 
     protected Stream<Candidate> matchingCandidates() {
@@ -33,16 +34,19 @@ public abstract class SingleQualityVoter extends Voter {
     @Override
     public void vote() {
         if (qualityAccumulator == null) {
-            throw new IllegalStateException("Value of qualityAccumulator field is not set.");
+            throw new IllegalStateException("Field qualityAccumulator is null.");
         } else {
-            int desiredQlty = matchingQualities().reduce(qualityAccumulator)
+            int desiredQuality = matchingQualities().reduce(qualityAccumulator)
                                                  .orElseThrow();
-            int desiredQltyCount = toIntExact(matchingQualities().filter(q -> q == desiredQlty)
-                                                                 .count());
-            chosenCandidate = matchingCandidates().filter(c -> c.quality(qualityNumber) == desiredQlty)
-                                                  .skip(random.nextInt(desiredQltyCount))
-                                                  .findFirst()
-                                                  .orElseThrow();
+            int desiredQualityCount =
+                    toIntExact(matchingQualities().filter(quality -> quality == desiredQuality)
+                                                  .count());
+            chosenCandidate =
+                    matchingCandidates().filter(
+                            candidate -> candidate.quality(qualityNumber) == desiredQuality)
+                                        .skip(random.nextInt(desiredQualityCount))
+                                        .findFirst()
+                                        .orElseThrow();
             chosenCandidate.voteFor();
         }
     }

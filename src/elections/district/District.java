@@ -49,6 +49,16 @@ public class District {
         voters.forEach(voter -> voter.influence(action));
     }
 
+    public double getCandidateAssessSum(Candidate candidate) {
+        return voters.stream()
+                     .mapToDouble(voter -> voter.assess(candidate))
+                     .sum();
+    }
+
+    public Stream<Voter> voters() {
+        return voters.stream();
+    }
+
     public Stream<Candidate> candidates() {
         return candidates.stream();
     }
