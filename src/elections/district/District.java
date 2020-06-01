@@ -50,11 +50,18 @@ public class District {
         partyToCandidates.put(party, candidates);
     }
 
+    public Candidate getCandidate(Party party, int ticketNumber) {
+        return candidates(party).filter(candidate -> candidate.getTicketNumber() == ticketNumber)
+                                .findFirst()
+                                .orElse(null);
+    }
+
     public District merge(District district) {
-        district.candidates().forEach(candidate -> {
-            addCandidate(candidate);
-            candidate.setTicketNumber(candidate.getTicketNumber() + getMandatesNumber());
-        });
+        district.candidates()
+                .forEach(candidate -> {
+                    addCandidate(candidate);
+                    candidate.setTicketNumber(candidate.getTicketNumber() + getMandatesNumber());
+                });
 
         district.voters()
                 .forEach(this::addVoter);
