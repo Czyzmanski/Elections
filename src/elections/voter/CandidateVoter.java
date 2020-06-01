@@ -29,7 +29,7 @@ public class CandidateVoter extends Voter {
     }
 
     @Override
-    public double assess(Candidate candidate) {
+    public int assess(Candidate candidate) {
         return 0;
     }
 

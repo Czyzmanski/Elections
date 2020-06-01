@@ -20,14 +20,14 @@ public class PartyVoter extends Voter {
     }
 
     @Override
-    public double assess(Candidate candidate) {
+    public int assess(Candidate candidate) {
         return 0;
     }
 
     @Override
     protected Stream<Candidate> matchingCandidates() {
         return district.candidates()
-                       .filter(candidate -> candidate.belongs(party));
+                       .filter(candidate -> candidate.beints(party));
     }
 
     @Override

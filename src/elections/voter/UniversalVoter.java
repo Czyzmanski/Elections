@@ -6,6 +6,7 @@ import elections.party.Action;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class UniversalVoter extends Voter {
@@ -23,16 +24,10 @@ public class UniversalVoter extends Voter {
     }
 
     @Override
-    public double assess(Candidate candidate) {
-        int weightedQualitiesSum = 0;
-        for (int i = 0; i < weights.length; i++) {
-            weightedQualitiesSum += weights[i] * candidate.quality(i);
-        }
-
-        int weightsSum = Arrays.stream(weights)
-                               .sum();
-
-        return (double) weightedQualitiesSum / (double) weightsSum;
+    public int assess(Candidate candidate) {
+        return IntStream.range(0, weights.length)
+                        .map(i -> weights[i] * candidate.quality(i))
+                        .sum();
     }
 
     @Override

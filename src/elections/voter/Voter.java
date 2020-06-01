@@ -28,6 +28,6 @@ public abstract class Voter {
 
     public abstract void revertLastInfluence();
 
-    public abstract double assess(Candidate candidate);
+    public abstract int assess(Candidate candidate);
 
 }

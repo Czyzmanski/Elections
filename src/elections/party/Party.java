@@ -8,16 +8,16 @@ public abstract class Party {
 
     protected String name;
     protected int budget;
-    protected int mandatesNumber;
+    protected int mandatesCount;
 
-    public Party(String name, int budget, int mandatesNumber) {
+    public Party(String name, int budget) {
         this.name = name;
         this.budget = budget;
-        this.mandatesNumber = mandatesNumber;
+        this.mandatesCount = 0;
     }
 
     public void addMandates(int mandates) {
-        this.mandatesNumber += mandates;
+        mandatesCount += mandates;
     }
 
     public abstract void conductCampaign(List<Action> actions, List<District> districts);

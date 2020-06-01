@@ -34,7 +34,7 @@ public class Candidate {
         return lastName;
     }
 
-    public boolean belongs(Party party) {
+    public boolean beints(Party party) {
         return this.party.equals(party);
     }
 

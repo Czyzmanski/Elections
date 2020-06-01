@@ -16,7 +16,7 @@ public class MinSingleQualityVoter extends SingleQualityVoter {
     }
 
     @Override
-    public double assess(Candidate candidate) {
+    public int assess(Candidate candidate) {
         return 0;
     }
 

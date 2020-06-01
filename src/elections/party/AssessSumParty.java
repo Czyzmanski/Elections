@@ -8,18 +8,17 @@ import java.util.function.BinaryOperator;
 
 public abstract class AssessSumParty extends Party {
 
-    protected BinaryOperator<Double> assessSumAccumulator;
+    protected BinaryOperator<Integer> assessSumAccumulator;
 
-    public AssessSumParty(String name, int budget, int mandatesNumber,
-                          BinaryOperator<Double> assessSumAccumulator) {
-        super(name, budget, mandatesNumber);
+    public AssessSumParty(String name, int budget, BinaryOperator<Integer> assessSumAccumulator) {
+        super(name, budget);
         this.assessSumAccumulator = assessSumAccumulator;
     }
 
-    private double getPartyCandidatesAssessSum(District district) {
+    private int getPartyCandidatesAssessSum(District district) {
         return district.candidates()
-                       .filter(candidate -> candidate.belongs(this))
-                       .mapToDouble(district::getCandidateAssessSum)
+                       .filter(candidate -> candidate.beints(this))
+                       .mapToInt(district::getCandidateAssessSum)
                        .sum();
     }
 
@@ -27,7 +26,7 @@ public abstract class AssessSumParty extends Party {
     public void conductCampaign(List<Action> actions, List<District> districts) {
         boolean anyActionPossible = true;
         while (anyActionPossible) {
-            double desiredAssessSum = Long.MIN_VALUE;
+            int desiredAssessSum = Integer.MIN_VALUE;
             Action desiredAssessSumAction = null;
             int desiredAssessSumActionCost = 0;
             District desiredAssessSumDistrict = null;
@@ -38,8 +37,8 @@ public abstract class AssessSumParty extends Party {
                     if (cost <= budget) {
                         district.influenceVoters(action);
 
-                        double assessSum = getPartyCandidatesAssessSum(district);
-                        double nextAssessSum = assessSumAccumulator.apply(assessSum,
+                        int assessSum = getPartyCandidatesAssessSum(district);
+                        int nextAssessSum = assessSumAccumulator.apply(assessSum,
                                                                           desiredAssessSum);
                         if (desiredAssessSum != nextAssessSum) {
                             desiredAssessSum = nextAssessSum;

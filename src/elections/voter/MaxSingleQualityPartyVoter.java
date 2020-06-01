@@ -19,7 +19,7 @@ public class MaxSingleQualityPartyVoter extends MaxSingleQualityVoter {
     @Override
     protected Stream<Candidate> matchingCandidates() {
         return super.matchingCandidates()
-                    .filter(c -> c.belongs(party));
+                    .filter(c -> c.beints(party));
     }
 
 }
