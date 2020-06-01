@@ -11,14 +11,12 @@ import static java.lang.Math.toIntExact;
 
 public abstract class SingleQualityVoter extends Voter {
 
-    protected Random random;
     protected int qualityNumber;
     protected BinaryOperator<Integer> qualityAccumulator;
 
     public SingleQualityVoter(String firstName, String lastName, District district,
                               int qualityNumber, BinaryOperator<Integer> qualityAccumulator) {
         super(firstName, lastName, district);
-        this.random = new Random();
         this.qualityNumber = qualityNumber - 1;
         this.qualityAccumulator = qualityAccumulator;
     }
@@ -44,7 +42,7 @@ public abstract class SingleQualityVoter extends Voter {
             chosenCandidate =
                     matchingCandidates().filter(
                             candidate -> candidate.quality(qualityNumber) == desiredQuality)
-                                        .skip(random.nextInt(desiredQualityCount))
+                                        .skip(new Random().nextInt(desiredQualityCount))
                                         .findFirst()
                                         .orElseThrow();
             chosenCandidate.voteFor();

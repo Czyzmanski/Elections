@@ -37,7 +37,7 @@ public class UniversalVoter extends Voter {
 
     @Override
     public void vote() {
-        chosenCandidate = matchingCandidates().max(Comparator.comparingDouble(this::assess))
+        chosenCandidate = matchingCandidates().max(Comparator.comparingInt(this::assess))
                                               .orElseThrow();
         chosenCandidate.voteFor();
     }

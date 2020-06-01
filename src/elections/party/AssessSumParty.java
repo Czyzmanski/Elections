@@ -17,7 +17,7 @@ public abstract class AssessSumParty extends Party {
 
     private int getPartyCandidatesAssessSum(District district) {
         return district.candidates()
-                       .filter(candidate -> candidate.beints(this))
+                       .filter(candidate -> candidate.belongs(this))
                        .mapToInt(district::getCandidateAssessSum)
                        .sum();
     }

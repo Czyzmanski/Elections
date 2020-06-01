@@ -11,12 +11,10 @@ import java.util.stream.Stream;
 public class PartyVoter extends Voter {
 
     protected final Party party;
-    protected final Random random;
 
     public PartyVoter(String firstName, String lastName, District district, Party party) {
         super(firstName, lastName, district);
         this.party = party;
-        this.random = new Random();
     }
 
     @Override
@@ -27,15 +25,15 @@ public class PartyVoter extends Voter {
     @Override
     protected Stream<Candidate> matchingCandidates() {
         return district.candidates()
-                       .filter(candidate -> candidate.beints(party));
+                       .filter(candidate -> candidate.belongs(party));
     }
 
     @Override
     public void vote() {
-        int toSkip = random.nextInt(district.mandatesNumber());
-        chosenCandidate = matchingCandidates().skip(toSkip)
+        chosenCandidate = matchingCandidates().skip(new Random().nextInt(district.mandatesNumber()))
                                               .findFirst()
                                               .orElseThrow();
+        chosenCandidate.voteFor();
     }
 
     @Override

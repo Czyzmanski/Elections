@@ -6,8 +6,8 @@ import java.util.List;
 
 public class ProfiligateParty extends Party {
 
-    public ProfiligateParty(String name, int budget, int mandatesNumber) {
-        super(name, budget, mandatesNumber);
+    public ProfiligateParty(String name, int budget) {
+        super(name, budget);
     }
 
     @Override

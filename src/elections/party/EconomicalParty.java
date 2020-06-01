@@ -8,8 +8,8 @@ import static java.util.Comparator.comparingInt;
 
 public class EconomicalParty extends Party {
 
-    public EconomicalParty(String name, int budget, int mandatesNumber) {
-        super(name, budget, mandatesNumber);
+    public EconomicalParty(String name, int budget) {
+        super(name, budget);
     }
 
     @Override
