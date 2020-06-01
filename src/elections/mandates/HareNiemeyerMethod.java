@@ -8,6 +8,10 @@ import java.util.Map;
 
 public class HareNiemeyerMethod extends MandatesAllocationMethod {
 
+    public HareNiemeyerMethod() {
+        super("Hare-Niemeyer method");
+    }
+
     @Override
     public Map<Party, Integer> allocateMandates(int mandatesNumber,
                                                 Map<Party, Integer> partyToVotesCount) {

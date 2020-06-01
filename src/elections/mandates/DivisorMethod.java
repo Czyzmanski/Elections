@@ -12,7 +12,8 @@ public abstract class DivisorMethod extends MandatesAllocationMethod {
 
     protected IntFunction<Integer> mandatesToDivisorFunction;
 
-    public DivisorMethod(IntFunction<Integer> mandatesToDivisorFunction) {
+    public DivisorMethod(String name, IntFunction<Integer> mandatesToDivisorFunction) {
+        super(name);
         this.mandatesToDivisorFunction = mandatesToDivisorFunction;
     }
 

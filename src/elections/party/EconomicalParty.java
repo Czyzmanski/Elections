@@ -15,7 +15,7 @@ public class EconomicalParty extends Party {
     @Override
     public void conductCampaign(List<Action> actions, List<District> districts) {
         District minVotersDistrict = districts.stream()
-                                              .min(comparingInt(District::votersNumber))
+                                              .min(comparingInt(District::getVotersNumber))
                                               .orElseThrow();
         Action minCostAction = actions.stream()
                                       .min(comparingInt(action -> action.getCost(minVotersDistrict)))

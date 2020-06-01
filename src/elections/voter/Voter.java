@@ -30,4 +30,9 @@ public abstract class Voter {
 
     public abstract int assess(Candidate candidate);
 
+    @Override
+    public String toString() {
+        return String.format("%s %s, chosen candidate: %s", firstName, lastName,
+                             chosenCandidate == null ? "" : chosenCandidate.getName());
+    }
 }

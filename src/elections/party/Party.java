@@ -16,10 +16,19 @@ public abstract class Party {
         this.mandatesCount = 0;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void addMandates(int mandates) {
         mandatesCount += mandates;
     }
 
     public abstract void conductCampaign(List<Action> actions, List<District> districts);
+
+    @Override
+    public String toString() {
+        return String.format("%s, number of all mandates: %d", name, mandatesCount);
+    }
 
 }

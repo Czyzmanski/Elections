@@ -24,13 +24,12 @@ public class PartyVoter extends Voter {
 
     @Override
     protected Stream<Candidate> matchingCandidates() {
-        return district.candidates()
-                       .filter(candidate -> candidate.belongs(party));
+        return district.candidates(party);
     }
 
     @Override
     public void vote() {
-        chosenCandidate = matchingCandidates().skip(new Random().nextInt(district.mandatesNumber()))
+        chosenCandidate = matchingCandidates().skip(new Random().nextInt(district.getMandatesNumber()))
                                               .findFirst()
                                               .orElseThrow();
         chosenCandidate.voteFor();

@@ -26,7 +26,7 @@ public abstract class SingleQualityVoter extends Voter {
     }
 
     protected Stream<Integer> matchingQualities() {
-        return matchingCandidates().map(c -> c.quality(qualityNumber));
+        return matchingCandidates().map(candidate -> candidate.quality(qualityNumber));
     }
 
     @Override

@@ -12,7 +12,7 @@ public class Candidate {
     private final int[] qualities;
     private final District district;
     private final Party party;
-    private final int ticketNumber;
+    private int ticketNumber;
     private int votesCount;
 
     public Candidate(String firstName, String lastName, int[] qualities,
@@ -26,12 +26,28 @@ public class Candidate {
         this.votesCount = 0;
     }
 
+    public String getName() {
+        return String.format("%s %s", firstName, lastName);
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
     public String getLastName() {
         return lastName;
+    }
+
+    public Party getParty() {
+        return party;
+    }
+
+    public int getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(int ticketNumber) {
+        this.ticketNumber = ticketNumber;
     }
 
     public boolean belongs(Party party) {
@@ -49,8 +65,8 @@ public class Candidate {
 
     @Override
     public String toString() {
-        return String.format("%s %s, party: %s, ticket number: %d, number of votes: %d",
-                             firstName, lastName, party.toString(), ticketNumber, votesCount);
+        return String.format("%s, party: %s, ticket number: %d, number of votes: %d",
+                             getName(), party.toString(), ticketNumber, votesCount);
     }
 
 }
