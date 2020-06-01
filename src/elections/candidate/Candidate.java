@@ -7,12 +7,12 @@ import java.util.Arrays;
 
 public class Candidate {
 
-    private String firstName;
-    private String lastName;
-    private int[] qualities;
-    private District district;
-    private Party party;
-    private int ticketNumber;
+    private final String firstName;
+    private final String lastName;
+    private final int[] qualities;
+    private final District district;
+    private final Party party;
+    private final int ticketNumber;
     private int votesCount;
 
     public Candidate(String firstName, String lastName, int[] qualities,
@@ -24,6 +24,14 @@ public class Candidate {
         this.party = party;
         this.ticketNumber = ticketNumber;
         this.votesCount = 0;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public boolean belongs(Party party) {
@@ -39,8 +47,10 @@ public class Candidate {
         return qualities[qualityNumber];
     }
 
-    public int[] qualities() {
-        return Arrays.copyOf(qualities, qualities.length);
+    @Override
+    public String toString() {
+        return String.format("%s %s, party: %s, ticket number: %d, number of votes: %d",
+                             firstName, lastName, party.toString(), ticketNumber, votesCount);
     }
 
 }
