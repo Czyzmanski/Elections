@@ -9,6 +9,8 @@ import elections.voter.Voter;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static java.util.Comparator.comparing;
+
 public class District {
 
     private static final int VOTERS_TO_MANDATES_DIVISION_FACTOR = 10;
@@ -22,7 +24,7 @@ public class District {
     public District(int number) {
         this.number = number;
         this.voters = new ArrayList<>();
-        this.partyToCandidates = new HashMap<>();
+        this.partyToCandidates = new TreeMap<>(comparing(Party::getName));
         this.partyToVotesCount = new HashMap<>();
         this.partyToMandatesCount = null;
     }

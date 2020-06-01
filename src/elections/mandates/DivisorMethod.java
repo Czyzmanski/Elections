@@ -2,11 +2,10 @@ package elections.mandates;
 
 import elections.party.Party;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.function.IntFunction;
+
+import static java.util.Comparator.comparing;
 
 public abstract class DivisorMethod extends MandatesAllocationMethod {
 
@@ -20,7 +19,7 @@ public abstract class DivisorMethod extends MandatesAllocationMethod {
     @Override
     public Map<Party, Integer> allocateMandates(int mandatesNumber,
                                                 Map<Party, Integer> partyToVotesCount) {
-        Map<Party, Integer> partyToMandatesCount = new HashMap<>();
+        Map<Party, Integer> partyToMandatesCount = new TreeMap<>(comparing(Party::getName));
         for (Party party : partyToVotesCount.keySet()) {
             partyToMandatesCount.put(party, 0);
         }

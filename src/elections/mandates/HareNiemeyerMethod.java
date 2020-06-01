@@ -5,6 +5,9 @@ import elections.party.Party;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+
+import static java.util.Comparator.comparing;
 
 public class HareNiemeyerMethod extends MandatesAllocationMethod {
 
@@ -21,7 +24,7 @@ public class HareNiemeyerMethod extends MandatesAllocationMethod {
                                         .reduce(0, Integer::sum);
 
         Map<Party, Double> partyToRemainder = new HashMap<>();
-        Map<Party, Integer> partyToMandatesCount = new HashMap<>();
+        Map<Party, Integer> partyToMandatesCount = new TreeMap<>(comparing(Party::getName));
 
         for (Map.Entry<Party, Integer> entry : partyToVotesCount.entrySet()) {
             Party party = entry.getKey();
