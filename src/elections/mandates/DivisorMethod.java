@@ -5,8 +5,6 @@ import elections.party.Party;
 import java.util.*;
 import java.util.function.IntFunction;
 
-import static java.util.Comparator.comparing;
-
 public abstract class DivisorMethod extends MandatesAllocationMethod {
 
     protected IntFunction<Integer> mandatesToDivisorFunction;
@@ -19,7 +17,7 @@ public abstract class DivisorMethod extends MandatesAllocationMethod {
     @Override
     public Map<Party, Integer> allocateMandates(int mandatesNumber,
                                                 Map<Party, Integer> partyToVotesCount) {
-        Map<Party, Integer> partyToMandatesCount = new TreeMap<>(comparing(Party::getName));
+        Map<Party, Integer> partyToMandatesCount = new TreeMap<>();
         for (Party party : partyToVotesCount.keySet()) {
             partyToMandatesCount.put(party, 0);
         }

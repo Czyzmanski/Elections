@@ -2,10 +2,11 @@ package elections.party;
 
 import elections.district.District;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Party {
+public abstract class Party implements Comparable<Party> {
 
     protected String name;
     protected int budget;
@@ -26,6 +27,12 @@ public abstract class Party {
     }
 
     public abstract void conductCampaign(List<Action> actions, List<District> districts);
+
+    @Override
+    public int compareTo(Party other) {
+        return Comparator.nullsLast(Comparator.comparing(Party::getName))
+                         .compare(this, other);
+    }
 
     @Override
     public boolean equals(Object other) {
