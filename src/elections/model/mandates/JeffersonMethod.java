@@ -1,4 +1,4 @@
-package elections.mandates;
+package elections.model.mandates;
 
 public class JeffersonMethod extends DivisorMethod {
 

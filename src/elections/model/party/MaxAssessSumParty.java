@@ -1,4 +1,4 @@
-package elections.party;
+package elections.model.party;
 
 import java.util.Comparator;
 import java.util.function.BinaryOperator;

@@ -1,6 +1,6 @@
-package elections.mandates;
+package elections.model.mandates;
 
-import elections.party.Party;
+import elections.model.party.Party;
 
 import java.util.Comparator;
 import java.util.HashMap;

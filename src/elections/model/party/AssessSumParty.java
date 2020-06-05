@@ -1,7 +1,7 @@
-package elections.party;
+package elections.model.party;
 
-import elections.district.District;
-import elections.voter.Voter;
+import elections.model.district.District;
+import elections.model.voter.Voter;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
@@ -38,8 +38,7 @@ public abstract class AssessSumParty extends Party {
                         district.influenceVoters(action);
 
                         int assessSum = getPartyCandidatesAssessSum(district);
-                        int nextAssessSum = assessSumAccumulator.apply(assessSum,
-                                                                          desiredAssessSum);
+                        int nextAssessSum = assessSumAccumulator.apply(assessSum, desiredAssessSum);
                         if (desiredAssessSum != nextAssessSum) {
                             desiredAssessSum = nextAssessSum;
                             desiredAssessSumAction = action;

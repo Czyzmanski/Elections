@@ -1,19 +1,19 @@
-package elections.candidate;
+package elections.model.candidate;
 
-import elections.district.District;
-import elections.party.Party;
+import elections.model.district.District;
+import elections.model.party.Party;
 
 import java.util.Arrays;
 
 public class Candidate {
 
-    private final String firstName;
-    private final String lastName;
-    private final int[] qualities;
-    private final District district;
-    private final Party party;
-    private int ticketNumber;
-    private int votesCount;
+    protected final String firstName;
+    protected final String lastName;
+    protected final int[] qualities;
+    protected final District district;
+    protected final Party party;
+    protected int ticketNumber;
+    protected int votesCount;
 
     public Candidate(String firstName, String lastName, int[] qualities,
                      District district, Party party, int ticketNumber) {

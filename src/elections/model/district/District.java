@@ -1,10 +1,10 @@
-package elections.district;
+package elections.model.district;
 
-import elections.candidate.Candidate;
-import elections.mandates.MandatesAllocationMethod;
-import elections.party.Action;
-import elections.party.Party;
-import elections.voter.Voter;
+import elections.model.candidate.Candidate;
+import elections.model.mandates.MandatesAllocationMethod;
+import elections.model.party.Action;
+import elections.model.party.Party;
+import elections.model.voter.Voter;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -19,12 +19,15 @@ public class District {
     protected Map<Party, Integer> partyToVotesCount;
     protected Map<Party, Integer> partyToMandatesCount;
 
-    public District(int number) {
+    public District(int number, int votersNumber) {
         this.number = number;
-        this.voters = new ArrayList<>();
+        this.voters = new ArrayList<>(votersNumber);
         this.partyToCandidates = new TreeMap<>();
         this.partyToVotesCount = new HashMap<>();
-        this.partyToMandatesCount = null;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public int getVotersNumber() {

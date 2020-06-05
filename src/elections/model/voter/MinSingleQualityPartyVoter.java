@@ -1,8 +1,8 @@
-package elections.voter;
+package elections.model.voter;
 
-import elections.candidate.Candidate;
-import elections.district.District;
-import elections.party.Party;
+import elections.model.candidate.Candidate;
+import elections.model.district.District;
+import elections.model.party.Party;
 
 import java.util.stream.Stream;
 

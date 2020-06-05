@@ -1,18 +1,18 @@
-package elections.voter;
+package elections.model.voter;
 
-import elections.candidate.Candidate;
-import elections.district.District;
-import elections.party.Action;
+import elections.model.candidate.Candidate;
+import elections.model.district.District;
+import elections.model.party.Action;
 
 import java.util.Comparator;
 import java.util.function.BinaryOperator;
 
-public class MinSingleQualityVoter extends SingleQualityVoter {
+public class MaxSingleQualityVoter extends SingleQualityVoter {
 
-    public MinSingleQualityVoter(String firstName, String lastName,
+    public MaxSingleQualityVoter(String firstName, String lastName,
                                  District district, int qualityNumber) {
         super(firstName, lastName, district, qualityNumber,
-              BinaryOperator.minBy(Comparator.naturalOrder()));
+              BinaryOperator.maxBy(Comparator.naturalOrder()));
     }
 
     @Override

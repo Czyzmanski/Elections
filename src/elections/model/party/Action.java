@@ -1,6 +1,6 @@
-package elections.party;
+package elections.model.party;
 
-import elections.district.District;
+import elections.model.district.District;
 
 import java.util.Arrays;
 
