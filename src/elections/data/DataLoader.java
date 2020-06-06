@@ -2,7 +2,7 @@ package elections.data;
 
 import elections.model.candidate.Candidate;
 import elections.model.district.District;
-import elections.model.district.DistrictsToMerge;
+import elections.model.district.PairToMerge;
 import elections.model.party.Action;
 import elections.model.party.Party;
 import elections.model.voter.*;
@@ -22,13 +22,17 @@ public class DataLoader implements Closeable {
     private int actionsNumber;
     private int qualitiesNumber;
 
-    private List<DistrictsToMerge> districtsToMerge;
+    private List<PairToMerge> districtsPairsToMerge;
     private Map<Integer, District> numberToDistrict;
     private Map<String, Party> nameToParty;
     private List<Action> actions;
 
     public DataLoader(InputStream inputStream) {
         this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+    }
+
+    public List<PairToMerge> districtsPairsToMerge() {
+        return new ArrayList<>(districtsPairsToMerge);
     }
 
     public Map<Integer, District> numberToDistrict() {
@@ -73,11 +77,11 @@ public class DataLoader implements Closeable {
 
         try (Scanner lineScanner = new Scanner(line)) {
             int pairsToMerge = lineScanner.nextInt();
-            districtsToMerge = new ArrayList<>(pairsToMerge);
+            this.districtsPairsToMerge = new ArrayList<>(pairsToMerge);
 
             for (int i = 0; i < pairsToMerge; i++) {
                 int first = lineScanner.nextInt(), second = lineScanner.nextInt();
-                districtsToMerge.add(new DistrictsToMerge(first, second));
+                this.districtsPairsToMerge.add(new PairToMerge(first, second));
             }
         }
     }

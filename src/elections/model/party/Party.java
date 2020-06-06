@@ -1,17 +1,18 @@
 package elections.model.party;
 
+import elections.simulation.Reusable;
 import elections.model.district.District;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Party implements Comparable<Party> {
+public abstract class Party implements Reusable, Comparable<Party> {
 
-    public final static String PROFILIGATE_PARTY = "R";
-    public final static String ECONOMICAL_PARTY = "S";
-    public final static String MIN_ASSESS_SUM_PARTY = "W";
-    public final static String MAX_ASSESS_SUM_PARTY = "Z";
+    private final static String PROFILIGATE_PARTY = "R";
+    private final static String ECONOMICAL_PARTY = "S";
+    private final static String MIN_ASSESS_SUM_PARTY = "W";
+    private final static String MAX_ASSESS_SUM_PARTY = "Z";
 
     protected String name;
     protected int budget;
@@ -59,6 +60,11 @@ public abstract class Party implements Comparable<Party> {
     @Override
     public String toString() {
         return String.format("%s, number of all mandates: %d", name, mandatesCount);
+    }
+
+    @Override
+    public void init() {
+        mandatesCount = 0;
     }
 
     public static Party newInstance(String type, String name, int budget) {

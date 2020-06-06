@@ -5,11 +5,12 @@ import elections.model.mandates.MandatesAllocationMethod;
 import elections.model.party.Action;
 import elections.model.party.Party;
 import elections.model.voter.Voter;
+import elections.simulation.Reusable;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-public class District {
+public class District implements Reusable {
 
     private static final int VOTERS_TO_MANDATES_DIVISION_FACTOR = 10;
 
@@ -76,9 +77,18 @@ public class District {
         return this;
     }
 
-    protected void printElectionsResults(MandatesAllocationMethod allocationMethod) {
-        System.out.println(allocationMethod);
+    public void conductElections(MandatesAllocationMethod allocationMethod) {
+        voters.forEach(Voter::vote);
 
+        Map<Party, Integer> partyToVotesCountCopy = new HashMap<>(partyToVotesCount);
+        partyToMandatesCount = allocationMethod.allocateMandates(getMandatesNumber(),
+                                                                 partyToVotesCountCopy);
+        partyToMandatesCount.forEach(Party::addMandates);
+
+        printElectionsResults();
+    }
+
+    protected void printElectionsResults() {
         System.out.println("\nDistrict: " + number);
 
         System.out.println("Voters:");
@@ -90,16 +100,6 @@ public class District {
         System.out.println("Parties:");
         partyToMandatesCount.forEach(
                 (party, mandatesCount) -> System.out.println(party.getName() + " " + mandatesCount));
-    }
-
-    public void conductElections(MandatesAllocationMethod allocationMethod) {
-        voters.forEach(Voter::vote);
-
-        Map<Party, Integer> partyToVotesCountCopy = new HashMap<>(partyToVotesCount);
-        partyToMandatesCount = allocationMethod.allocateMandates(getMandatesNumber(),
-                                                                 partyToVotesCountCopy);
-
-        printElectionsResults(allocationMethod);
     }
 
     public void influenceVoters(Action action) {
@@ -125,6 +125,26 @@ public class District {
     public Stream<Candidate> candidates(Party party) {
         return partyToCandidates.getOrDefault(party, new ArrayList<>())
                                 .stream();
+    }
+
+    private static <K> void initCountMap(Map<K, Integer> countMap) {
+        countMap.keySet()
+                .forEach(key -> countMap.put(key, 0));
+    }
+
+    @Override
+    public void init() {
+        voters.forEach(Voter::init);
+
+        partyToCandidates.values()
+                         .stream()
+                         .flatMap(Collection::stream)
+                         .forEach(Candidate::init);
+
+        initCountMap(partyToVotesCount);
+        if (partyToMandatesCount != null) {
+            initCountMap(partyToMandatesCount);
+        }
     }
 
 }

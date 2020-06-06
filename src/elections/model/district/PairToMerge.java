@@ -1,11 +1,11 @@
 package elections.model.district;
 
-public class DistrictsToMerge {
+public class PairToMerge {
 
     private final Integer first;
     private final Integer second;
 
-    public DistrictsToMerge(Integer first, Integer second) {
+    public PairToMerge(Integer first, Integer second) {
         this.first = first;
         this.second = second;
     }

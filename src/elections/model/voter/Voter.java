@@ -1,12 +1,13 @@
 package elections.model.voter;
 
+import elections.simulation.Reusable;
 import elections.model.candidate.Candidate;
 import elections.model.district.District;
 import elections.model.party.Action;
 
 import java.util.stream.Stream;
 
-public abstract class Voter {
+public abstract class Voter implements Reusable {
 
     protected String firstName;
     protected String lastName;
@@ -35,4 +36,10 @@ public abstract class Voter {
         return String.format("%s %s, chosen candidate: %s", firstName, lastName,
                              chosenCandidate == null ? "" : chosenCandidate.getName());
     }
+
+    @Override
+    public void init() {
+        chosenCandidate = null;
+    }
+
 }

@@ -1,11 +1,12 @@
 package elections.model.candidate;
 
+import elections.simulation.Reusable;
 import elections.model.district.District;
 import elections.model.party.Party;
 
 import java.util.Arrays;
 
-public class Candidate {
+public class Candidate implements Reusable {
 
     protected final String firstName;
     protected final String lastName;
@@ -67,6 +68,11 @@ public class Candidate {
     public String toString() {
         return String.format("%s, party: %s, ticket number: %d, number of votes: %d",
                              getName(), party.toString(), ticketNumber, votesCount);
+    }
+
+    @Override
+    public void init() {
+        votesCount = 0;
     }
 
 }
