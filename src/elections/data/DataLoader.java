@@ -2,6 +2,7 @@ package elections.data;
 
 import elections.model.candidate.Candidate;
 import elections.model.district.District;
+import elections.model.district.DistrictsToMerge;
 import elections.model.party.Action;
 import elections.model.party.Party;
 import elections.model.voter.*;
@@ -11,15 +12,17 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class DataLoader implements Closeable {
 
     private final BufferedReader bufferedReader;
+
     private int districtsNumber;
     private int partiesNumber;
     private int actionsNumber;
     private int qualitiesNumber;
+
+    private List<DistrictsToMerge> districtsToMerge;
     private Map<Integer, District> numberToDistrict;
     private Map<String, Party> nameToParty;
     private List<Action> actions;
@@ -28,18 +31,16 @@ public class DataLoader implements Closeable {
         this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     }
 
-    public Stream<District> districts() {
-        return numberToDistrict.values()
-                               .stream();
+    public Map<Integer, District> numberToDistrict() {
+        return new HashMap<>(numberToDistrict);
     }
 
-    public Stream<Party> parties() {
-        return nameToParty.values()
-                          .stream();
+    public List<Party> parties() {
+        return new ArrayList<>(nameToParty.values());
     }
 
-    public Stream<Action> actions() {
-        return actions.stream();
+    public List<Action> actions() {
+        return new ArrayList<>(actions);
     }
 
     public void loadData() throws IOException {
@@ -67,7 +68,18 @@ public class DataLoader implements Closeable {
     }
 
     private void loadDistrictsToMerge() throws IOException {
+        String line = bufferedReader.readLine()
+                                    .replaceAll("[(,)]", " ");
 
+        try (Scanner lineScanner = new Scanner(line)) {
+            int pairsToMerge = lineScanner.nextInt();
+            districtsToMerge = new ArrayList<>(pairsToMerge);
+
+            for (int i = 0; i < pairsToMerge; i++) {
+                int first = lineScanner.nextInt(), second = lineScanner.nextInt();
+                districtsToMerge.add(new DistrictsToMerge(first, second));
+            }
+        }
     }
 
     private void loadParties() throws IOException {
@@ -80,8 +92,7 @@ public class DataLoader implements Closeable {
 
         nameToParty = IntStream.range(0, partiesNumber)
                                .mapToObj(i -> Party.newInstance(partyTypes[i], partyNames[i],
-                                                                Integer.parseInt(
-                                                                        partyBudgets[i])))
+                                                                Integer.parseInt(partyBudgets[i])))
                                .collect(Collectors.toMap(Party::getName, Function.identity()));
     }
 
@@ -90,10 +101,8 @@ public class DataLoader implements Closeable {
                                                .split("\\s");
 
         numberToDistrict = IntStream.rangeClosed(1, districtsNumber)
-                                    .mapToObj(i -> new District(i, Integer.parseInt(
-                                            votersNumbers[i])))
-                                    .collect(Collectors.toMap(District::getNumber,
-                                                              Function.identity()));
+                                    .mapToObj(i -> new District(i, Integer.parseInt(votersNumbers[i - 1])))
+                                    .collect(Collectors.toMap(District::getNumber, Function.identity()));
     }
 
     private void loadCandidates() throws IOException {
@@ -194,7 +203,7 @@ public class DataLoader implements Closeable {
                     return new UniversalPartyVoter(firstName, lastName, district, weights, party);
                 }
             } else if (type == MIN_SINGLE_QUALITY_VOTER || type == MIN_SINGLE_QUALITY_PARTY_VOTER
-                       || type == MAX_SINGLE_QUALITY_VOTER || type == MAX_SINGLE_QUALITY_PARTY_VOTER) {
+                    || type == MAX_SINGLE_QUALITY_VOTER || type == MAX_SINGLE_QUALITY_PARTY_VOTER) {
                 int qualityNumber = lineScanner.nextInt();
 
                 if (type == MIN_SINGLE_QUALITY_VOTER) {
@@ -220,7 +229,7 @@ public class DataLoader implements Closeable {
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
             lineScanner.close();
         }
 

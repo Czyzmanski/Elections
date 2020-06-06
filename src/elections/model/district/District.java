@@ -15,12 +15,14 @@ public class District {
 
     protected int number;
     protected List<Voter> voters;
+    protected int votersNumber;
     protected Map<Party, List<Candidate>> partyToCandidates;
     protected Map<Party, Integer> partyToVotesCount;
     protected Map<Party, Integer> partyToMandatesCount;
 
     public District(int number, int votersNumber) {
         this.number = number;
+        this.votersNumber = votersNumber;
         this.voters = new ArrayList<>(votersNumber);
         this.partyToCandidates = new TreeMap<>();
         this.partyToVotesCount = new HashMap<>();
@@ -31,11 +33,11 @@ public class District {
     }
 
     public int getVotersNumber() {
-        return voters.size();
+        return votersNumber;
     }
 
     public int getMandatesNumber() {
-        return voters.size() / VOTERS_TO_MANDATES_DIVISION_FACTOR;
+        return votersNumber / VOTERS_TO_MANDATES_DIVISION_FACTOR;
     }
 
     public void addVote(Party party) {
@@ -68,6 +70,8 @@ public class District {
 
         district.voters()
                 .forEach(this::addVoter);
+
+        votersNumber += district.votersNumber;
 
         return this;
     }
