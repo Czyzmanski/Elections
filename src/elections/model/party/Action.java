@@ -9,11 +9,6 @@ public class Action {
     private final int[] changes;
     private final int absValuesSum;
 
-    private Action(int[] changes, int absValuesSum) {
-        this.changes = changes;
-        this.absValuesSum = absValuesSum;
-    }
-
     public Action(int[] changes) {
         this.changes = Arrays.copyOf(changes, changes.length);
         this.absValuesSum = Arrays.stream(changes)
