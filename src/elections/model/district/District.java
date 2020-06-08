@@ -92,10 +92,13 @@ public class District implements Reusable {
         System.out.println("\nDistrict: " + number);
 
         System.out.println("Voters:");
-        voters.forEach(System.out::println);
+        voters.stream()
+              .sorted()
+              .forEachOrdered(System.out::println);
 
         System.out.println("Candidates:");
-        candidates().forEach(System.out::println);
+        candidates().sorted()
+                    .forEachOrdered(System.out::println);
 
         System.out.println("Parties:");
         partyToMandatesCount.forEach(

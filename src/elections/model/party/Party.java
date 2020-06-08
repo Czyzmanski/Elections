@@ -14,12 +14,20 @@ public abstract class Party implements Reusable, Comparable<Party> {
     private final static String MIN_ASSESS_SUM_PARTY = "W";
     private final static String MAX_ASSESS_SUM_PARTY = "Z";
 
+    private static final Comparator<Party> partiesComparator;
+
+    static {
+        partiesComparator = Comparator.comparing(Party::getName);
+    }
+
     protected String name;
+    private final int initBudget;
     protected int budget;
     protected int mandatesCount;
 
     public Party(String name, int budget) {
         this.name = name;
+        this.initBudget = budget;
         this.budget = budget;
         this.mandatesCount = 0;
     }
@@ -36,8 +44,7 @@ public abstract class Party implements Reusable, Comparable<Party> {
 
     @Override
     public int compareTo(Party other) {
-        return Comparator.nullsLast(Comparator.comparing(Party::getName))
-                         .compare(this, other);
+        return partiesComparator.compare(this, other);
     }
 
     @Override
@@ -64,6 +71,7 @@ public abstract class Party implements Reusable, Comparable<Party> {
 
     @Override
     public void init() {
+        budget = initBudget;
         mandatesCount = 0;
     }
 

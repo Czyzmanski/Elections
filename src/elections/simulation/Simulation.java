@@ -43,6 +43,9 @@ public class Simulation implements Reusable {
 
         parties.forEach(party -> party.conductCampaign(actions, districts));
         districts.forEach(district -> district.conductElections(allocationMethod));
+
+        System.out.println("\nParties with number of mandates from all districts:");
+        parties.forEach(System.out::println);
     }
 
     @Override

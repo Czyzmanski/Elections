@@ -40,7 +40,10 @@ public class DataLoader implements Closeable {
     }
 
     public List<Party> parties() {
-        return new ArrayList<>(nameToParty.values());
+        return nameToParty.values()
+                          .stream()
+                          .sorted()
+                          .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public List<Action> actions() {
@@ -211,11 +214,9 @@ public class DataLoader implements Closeable {
                 int qualityNumber = lineScanner.nextInt();
 
                 if (type == MIN_SINGLE_QUALITY_VOTER) {
-                    return new MinSingleQualityVoter(firstName, lastName, district,
-                                                     qualityNumber);
+                    return new MinSingleQualityVoter(firstName, lastName, district, qualityNumber);
                 } else if (type == MAX_SINGLE_QUALITY_VOTER) {
-                    return new MaxSingleQualityVoter(firstName, lastName, district,
-                                                     qualityNumber);
+                    return new MaxSingleQualityVoter(firstName, lastName, district, qualityNumber);
                 } else {
                     Party party = nameToParty.get(lineScanner.next());
 

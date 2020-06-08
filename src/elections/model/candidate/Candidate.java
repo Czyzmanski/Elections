@@ -5,8 +5,17 @@ import elections.model.district.District;
 import elections.model.party.Party;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
-public class Candidate implements Reusable {
+public class Candidate implements Reusable, Comparable<Candidate> {
+
+    private static final Comparator<Candidate> candidatesComparator;
+
+    static {
+        candidatesComparator = Comparator.comparing(Candidate::getFirstName)
+                                         .thenComparing(Candidate::getLastName)
+                                         .thenComparing(Candidate::getParty);
+    }
 
     protected final String firstName;
     protected final String lastName;
@@ -67,7 +76,7 @@ public class Candidate implements Reusable {
     @Override
     public String toString() {
         return String.format("%s, party: %s, ticket number: %d, number of votes: %d",
-                             getName(), party.toString(), ticketNumber, votesCount);
+                             getName(), party.getName(), ticketNumber, votesCount);
     }
 
     @Override
@@ -75,4 +84,8 @@ public class Candidate implements Reusable {
         votesCount = 0;
     }
 
+    @Override
+    public int compareTo(Candidate other) {
+        return candidatesComparator.compare(this, other);
+    }
 }

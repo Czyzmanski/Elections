@@ -5,9 +5,17 @@ import elections.model.candidate.Candidate;
 import elections.model.district.District;
 import elections.model.party.Action;
 
+import java.util.Comparator;
 import java.util.stream.Stream;
 
-public abstract class Voter implements Reusable {
+public abstract class Voter implements Reusable, Comparable<Voter> {
+
+    private static final Comparator<Voter> votersComparator;
+
+    static {
+        votersComparator = Comparator.comparing(Voter::getFirstName)
+                                     .thenComparing(Voter::getLastName);
+    }
 
     protected String firstName;
     protected String lastName;
@@ -19,6 +27,14 @@ public abstract class Voter implements Reusable {
         this.lastName = lastName;
         this.district = district;
         this.chosenCandidate = null;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     protected abstract Stream<Candidate> matchingCandidates();
@@ -40,6 +56,11 @@ public abstract class Voter implements Reusable {
     @Override
     public void init() {
         chosenCandidate = null;
+    }
+
+    @Override
+    public int compareTo(Voter other) {
+        return votersComparator.compare(this, other);
     }
 
 }
