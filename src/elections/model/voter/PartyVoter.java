@@ -29,7 +29,7 @@ public class PartyVoter extends Voter {
 
     @Override
     public void vote() {
-        chosenCandidate = matchingCandidates().skip(new Random().nextInt(district.getMandatesNumber()))
+        chosenCandidate = matchingCandidates().skip(new Random().nextInt(district.getSeatsNumber()))
                                               .findFirst()
                                               .orElseThrow();
         chosenCandidate.voteFor();

@@ -1,7 +1,7 @@
 package elections.model.district;
 
 import elections.model.candidate.Candidate;
-import elections.model.mandates.MandatesAllocationMethod;
+import elections.model.seats.SeatsAllocationMethod;
 import elections.model.party.Action;
 import elections.model.party.Party;
 import elections.model.voter.Voter;
@@ -12,14 +12,14 @@ import java.util.stream.Stream;
 
 public class District implements Reusable {
 
-    private static final int VOTERS_TO_MANDATES_DIVISION_FACTOR = 10;
+    private static final int VOTERS_TO_SEATS_DIVISION_FACTOR = 10;
 
     protected int number;
     protected List<Voter> voters;
     protected int votersNumber;
     protected Map<Party, List<Candidate>> partyToCandidates;
     protected Map<Party, Integer> partyToVotesCount;
-    protected Map<Party, Integer> partyToMandatesCount;
+    protected Map<Party, Integer> partyToSeatsCount;
 
     public District(int number, int votersNumber) {
         this.number = number;
@@ -37,8 +37,8 @@ public class District implements Reusable {
         return votersNumber;
     }
 
-    public int getMandatesNumber() {
-        return votersNumber / VOTERS_TO_MANDATES_DIVISION_FACTOR;
+    public int getSeatsNumber() {
+        return votersNumber / VOTERS_TO_SEATS_DIVISION_FACTOR;
     }
 
     public void addVote(Party party) {
@@ -66,7 +66,7 @@ public class District implements Reusable {
         district.candidates()
                 .forEach(candidate -> {
                     addCandidate(candidate);
-                    candidate.setTicketNumber(candidate.getTicketNumber() + getMandatesNumber());
+                    candidate.setTicketNumber(candidate.getTicketNumber() + getSeatsNumber());
                 });
 
         district.voters()
@@ -77,13 +77,13 @@ public class District implements Reusable {
         return this;
     }
 
-    public void conductElections(MandatesAllocationMethod allocationMethod) {
+    public void conductElections(SeatsAllocationMethod allocationMethod) {
         voters.forEach(Voter::vote);
 
         Map<Party, Integer> partyToVotesCountCopy = new HashMap<>(partyToVotesCount);
-        partyToMandatesCount = allocationMethod.allocateMandates(getMandatesNumber(),
+        partyToSeatsCount = allocationMethod.allocateSeats(getSeatsNumber(),
                                                                  partyToVotesCountCopy);
-        partyToMandatesCount.forEach(Party::addMandates);
+        partyToSeatsCount.forEach(Party::addSeats);
 
         printElectionsResults();
     }
@@ -101,8 +101,8 @@ public class District implements Reusable {
                     .forEachOrdered(System.out::println);
 
         System.out.println("Parties:");
-        partyToMandatesCount.forEach(
-                (party, mandatesCount) -> System.out.println(party.getName() + " " + mandatesCount));
+        partyToSeatsCount.forEach(
+                (party, seatsCount) -> System.out.println(party.getName() + " " + seatsCount));
     }
 
     public void influenceVoters(Action action) {
@@ -145,8 +145,8 @@ public class District implements Reusable {
                          .forEach(Candidate::init);
 
         initCountMap(partyToVotesCount);
-        if (partyToMandatesCount != null) {
-            initCountMap(partyToMandatesCount);
+        if (partyToSeatsCount != null) {
+            initCountMap(partyToSeatsCount);
         }
     }
 

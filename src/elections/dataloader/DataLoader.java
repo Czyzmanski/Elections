@@ -1,4 +1,4 @@
-package elections.data;
+package elections.dataloader;
 
 import elections.model.candidate.Candidate;
 import elections.model.district.District;
@@ -117,9 +117,9 @@ public class DataLoader implements Closeable {
 
         for (int districtNumber = 1; districtNumber <= districtsNumber; districtNumber++) {
             for (int i = 0; i < partiesNumber; i++) {
-                int mandatesNumber = numberToDistrict.get(districtNumber)
-                                                     .getMandatesNumber();
-                for (int j = 0; j < mandatesNumber; j++) {
+                int seatsNumber = numberToDistrict.get(districtNumber)
+                                                     .getSeatsNumber();
+                for (int j = 0; j < seatsNumber; j++) {
                     try (Scanner lineScanner = new Scanner(bufferedReader.readLine())) {
                         String firstName = lineScanner.next(), lastName = lineScanner.next();
                         District district = numberToDistrict.get(lineScanner.nextInt());

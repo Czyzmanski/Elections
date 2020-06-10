@@ -1,12 +1,12 @@
 package elections;
 
-import elections.data.DataLoader;
+import elections.dataloader.DataLoader;
 import elections.model.district.District;
 import elections.model.district.PairToMerge;
-import elections.model.mandates.HareNiemeyerMethod;
-import elections.model.mandates.JeffersonMethod;
-import elections.model.mandates.MandatesAllocationMethod;
-import elections.model.mandates.SainteLagueMethod;
+import elections.model.seats.HareNiemeyerMethod;
+import elections.model.seats.DHondtMethod;
+import elections.model.seats.SeatsAllocationMethod;
+import elections.model.seats.SainteLagueMethod;
 import elections.model.party.Action;
 import elections.model.party.Party;
 import elections.simulation.Simulation;
@@ -39,16 +39,16 @@ public class Main {
 
             Simulation simulation = new Simulation(parties, actions,
                                                    districtsPairsToMerge, numberToDistrict);
-            MandatesAllocationMethod[] allocationMethods = {new JeffersonMethod(),
-                                                            new SainteLagueMethod(),
-                                                            new HareNiemeyerMethod()};
+            SeatsAllocationMethod[] allocationMethods = {new DHondtMethod(),
+                                                         new SainteLagueMethod(),
+                                                         new HareNiemeyerMethod()};
 
-            for (MandatesAllocationMethod allocationMethod : allocationMethods) {
+            for (SeatsAllocationMethod allocationMethod : allocationMethods) {
                 simulation.init();
                 simulation.conductSimulation(allocationMethod);
             }
         } catch (IOException e) {
-            System.err.println("An IO error has occurred when loading a data.");
+            System.err.println("An IO error has occurred when loading data.");
             System.exit(-1);
         }
     }

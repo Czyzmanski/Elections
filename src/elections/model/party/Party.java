@@ -23,21 +23,21 @@ public abstract class Party implements Reusable, Comparable<Party> {
     protected String name;
     private final int initBudget;
     protected int budget;
-    protected int mandatesCount;
+    protected int seatsCount;
 
     public Party(String name, int budget) {
         this.name = name;
         this.initBudget = budget;
         this.budget = budget;
-        this.mandatesCount = 0;
+        this.seatsCount = 0;
     }
 
     public String getName() {
         return name;
     }
 
-    public void addMandates(int mandates) {
-        mandatesCount += mandates;
+    public void addSeats(int seats) {
+        seatsCount += seats;
     }
 
     public abstract void conductCampaign(List<Action> actions, List<District> districts);
@@ -66,13 +66,13 @@ public abstract class Party implements Reusable, Comparable<Party> {
 
     @Override
     public String toString() {
-        return String.format("%s, number of all mandates: %d", name, mandatesCount);
+        return String.format("%s, number of all seats: %d", name, seatsCount);
     }
 
     @Override
     public void init() {
         budget = initBudget;
-        mandatesCount = 0;
+        seatsCount = 0;
     }
 
     public static Party newInstance(String type, String name, int budget) {

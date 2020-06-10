@@ -1,4 +1,9 @@
 .idea
 out
+*.zip
+*.jpeg
+*.jpg
+*.in
+*.png
 *.txt
 *.iml

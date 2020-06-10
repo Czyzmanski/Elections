@@ -1,25 +1,25 @@
-package elections.model.mandates;
+package elections.model.seats;
 
 import elections.model.party.Party;
 
 import java.util.*;
 import java.util.function.IntFunction;
 
-public abstract class DivisorMethod extends MandatesAllocationMethod {
+public abstract class DivisorMethod extends SeatsAllocationMethod {
 
-    protected IntFunction<Integer> mandatesToDivisorFunction;
+    protected IntFunction<Integer> seatsToDivisorFunction;
 
-    public DivisorMethod(String name, IntFunction<Integer> mandatesToDivisorFunction) {
+    public DivisorMethod(String name, IntFunction<Integer> seatsToDivisorFunction) {
         super(name);
-        this.mandatesToDivisorFunction = mandatesToDivisorFunction;
+        this.seatsToDivisorFunction = seatsToDivisorFunction;
     }
 
     @Override
-    public Map<Party, Integer> allocateMandates(int mandatesNumber,
+    public Map<Party, Integer> allocateSeats(int seatsNumber,
                                                 Map<Party, Integer> partyToVotesCount) {
-        Map<Party, Integer> partyToMandatesCount = new TreeMap<>();
+        Map<Party, Integer> partyToSeatsCount = new TreeMap<>();
         for (Party party : partyToVotesCount.keySet()) {
-            partyToMandatesCount.put(party, 0);
+            partyToSeatsCount.put(party, 0);
         }
 
         Map<Party, Double> partyToQuotient = new HashMap<>();
@@ -27,7 +27,7 @@ public abstract class DivisorMethod extends MandatesAllocationMethod {
             partyToQuotient.put(entry.getKey(), (double) entry.getValue());
         }
 
-        for (int i = 1; i <= mandatesNumber; i++) {
+        for (int i = 1; i <= seatsNumber; i++) {
             double maxQuotient = partyToQuotient.values()
                                                 .stream()
                                                 .max(Comparator.naturalOrder())
@@ -44,15 +44,16 @@ public abstract class DivisorMethod extends MandatesAllocationMethod {
                                                     .findFirst()
                                                     .orElseThrow();
 
+            partyToSeatsCount.merge(maxQuotientParty, 1, Integer::sum);
+
             double maxQuotientPartyVotes = partyToVotesCount.get(maxQuotientParty);
-            int maxQuotientPartyMandates = partyToMandatesCount.get(maxQuotientParty);
-            double divisor = mandatesToDivisorFunction.apply(maxQuotientPartyMandates);
+            int maxQuotientPartySeats = partyToSeatsCount.get(maxQuotientParty);
+            double divisor = seatsToDivisorFunction.apply(maxQuotientPartySeats);
 
             partyToQuotient.put(maxQuotientParty, maxQuotientPartyVotes / divisor);
-            partyToMandatesCount.merge(maxQuotientParty, 1, Integer::sum);
         }
 
-        return partyToMandatesCount;
+        return partyToSeatsCount;
     }
 
 }

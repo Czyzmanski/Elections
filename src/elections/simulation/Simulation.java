@@ -2,7 +2,7 @@ package elections.simulation;
 
 import elections.model.district.District;
 import elections.model.district.PairToMerge;
-import elections.model.mandates.MandatesAllocationMethod;
+import elections.model.seats.SeatsAllocationMethod;
 import elections.model.party.Action;
 import elections.model.party.Party;
 
@@ -38,13 +38,13 @@ public class Simulation implements Reusable {
                                          .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public void conductSimulation(MandatesAllocationMethod allocationMethod) {
+    public void conductSimulation(SeatsAllocationMethod allocationMethod) {
         System.out.println("\n" + allocationMethod);
 
         parties.forEach(party -> party.conductCampaign(actions, districts));
         districts.forEach(district -> district.conductElections(allocationMethod));
 
-        System.out.println("\nParties with number of mandates from all districts:");
+        System.out.println("\nParties with number of seats from all districts:");
         parties.forEach(System.out::println);
     }
 
